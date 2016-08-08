@@ -101,6 +101,7 @@ public class CustomAdapter extends BaseAdapter  {
             /***** Get each Model object from Arraylist ********/
 
            String  value =  data.get(position);
+            if(value.isEmpty())value="Others";
 
             /************  Set Model values in Holder elements ***********/
 

@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -29,7 +30,7 @@ import java.util.Set;
  *
  * create an instance of this fragment.
  */
-public class FirstFragment extends Fragment implements AdapterView.OnItemSelectedListener ,DataLoaderCallback {
+public class FirstFragment extends Fragment implements AdapterView.OnItemSelectedListener ,DataLoaderCallback ,View.OnClickListener{
 
 
     private ArrayList<HashMap<String, String>> users;
@@ -39,6 +40,13 @@ public class FirstFragment extends Fragment implements AdapterView.OnItemSelecte
     private CustomAdapter adapter;
     private Map<String, ArrayList<HashMap<String, String>>> gpedData;
     private FirstFragmentCallback callback;
+
+    private Button byDeptBtn;
+    private Button byJobTitleBtn;
+    private Button byLocationBtn;
+    private Button byEmplTypeBtn;
+
+
 
     public FirstFragment() {
         // Required empty public constructor
@@ -89,15 +97,58 @@ public class FirstFragment extends Fragment implements AdapterView.OnItemSelecte
 
         listView.setOnItemClickListener(mMessageClickedHandler);
 
-        Spinner spinner = (Spinner) v.findViewById(R.id.filter);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
-                R.array.filter_array, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-        spinner.setOnItemSelectedListener(this);
+
+
+        byDeptBtn=(Button)v.findViewById(R.id.departmentBtn);
+        byDeptBtn.setOnClickListener(this);
+
+        byJobTitleBtn=(Button)v.findViewById(R.id.jobTitleBtn);
+        byJobTitleBtn.setOnClickListener(this);
+
+        byLocationBtn=(Button)v.findViewById(R.id.locationBtn);
+        byLocationBtn.setOnClickListener( this);
+
+        byEmplTypeBtn=(Button)v.findViewById(R.id.employeeTypeBtn);
+        byEmplTypeBtn.setOnClickListener( this);
+
+
+//        Spinner spinner = (Spinner) v.findViewById(R.id.filter);
+//        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
+//                R.array.filter_array, android.R.layout.simple_spinner_item);
+//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        spinner.setAdapter(adapter);
+//        spinner.setOnItemSelectedListener(this);
         return v;
     }
 
+
+    @Override
+    public void onClick(View v) {
+
+        if(v==byDeptBtn){
+            filterDataBy("department");
+
+        }else if(v==byEmplTypeBtn){
+            filterDataBy("employee_type");
+        }else if (v==byJobTitleBtn){
+            filterDataBy("job_title");
+        }else if(v==byLocationBtn){
+            filterDataBy("location");
+
+        }
+
+    }
+
+
+    private void filterDataBy(String attr){
+        if(this.users!=null){
+            gpedData= new UserGrouper().groupUsersByAttribute(users,attr);
+            Set keys=gpedData.keySet();
+
+            adapter.updateAdapterData(new ArrayList<String>(keys));
+
+        }
+    }
 
     @Override
     public void onAttach(Context context) {
@@ -119,6 +170,8 @@ public class FirstFragment extends Fragment implements AdapterView.OnItemSelecte
     @Override
     public void onResume() {
         super.onResume();
+
+        filterDataBy("department");
 
         if(this.users==null){
             progress = new ProgressDialog(getContext());
@@ -151,14 +204,14 @@ public class FirstFragment extends Fragment implements AdapterView.OnItemSelecte
     public void onItemSelected(AdapterView<?> parent, View view,
                                int pos, long id) {
         // An item was selected. You can retrieve the selected item using
-        if(this.users!=null){
-            String attr=(String) parent.getItemAtPosition(pos);
-            gpedData= new UserGrouper().groupUsersByAttribute(users,attr);
-            Set keys=gpedData.keySet();
-
-            adapter.updateAdapterData(new ArrayList<String>(keys));
-
-        }
+//        if(this.users!=null){
+//            String attr=(String) parent.getItemAtPosition(pos);
+//            gpedData= new UserGrouper().groupUsersByAttribute(users,attr);
+//            Set keys=gpedData.keySet();
+//
+//            adapter.updateAdapterData(new ArrayList<String>(keys));
+//
+//        }
 
     }
 

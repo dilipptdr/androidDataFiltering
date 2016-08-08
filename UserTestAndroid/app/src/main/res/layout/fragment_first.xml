@@ -17,18 +17,63 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:listSelector="#e9e9f1"
-        android:layout_above="@+id/filter"
+        android:layout_above="@+id/filter_buttons"
         android:layout_marginBottom="20dp"
         />
-    <Spinner
-        android:id="@+id/filter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="20dp"
 
-        />
+
+    <RelativeLayout
+        android:id="@+id/filter_buttons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        >
+        <Button
+            android:id="@+id/departmentBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:text="By Department"
+            android:background="#4991ea"
+            android:textColor="#FFFFFF"
+            android:textSize="10sp"
+            android:layout_alignParentLeft="true"
+            android:onClick="byDepartmentAction"/>
+        <Button
+            android:id="@+id/locationBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:textSize="10sp"
+            android:textColor="#FFFFFF"
+            android:padding="0dp"
+            android:text="By Location"
+            android:background="#4991ea"
+            android:layout_toRightOf="@+id/departmentBtn"/>
+        <Button
+            android:id="@+id/jobTitleBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="0dp"
+            android:layout_marginLeft="5dp"
+            android:textSize="10sp"
+            android:textColor="#FFFFFF"
+            android:text="By Job Title"
+            android:background="#4991ea"
+            android:layout_toRightOf="@+id/locationBtn"/>
+        <Button
+            android:id="@+id/employeeTypeBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:padding="0dp"
+            android:textColor="#FFFFFF"
+            android:text="By Employee Type"
+            android:textSize="10sp"
+            android:background="#4991ea"
+            android:layout_toRightOf="@+id/jobTitleBtn"/>
+
+    </RelativeLayout>
 
 </RelativeLayout>
